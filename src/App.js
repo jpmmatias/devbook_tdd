@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from 'react';
+import { Typography } from '@material-ui/core';
+import Booklist from './components/Booklist';
+import { api } from './services/api';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [books, setbooks] = useState([]);
+
+	useEffect(() => {
+		const fetchBooks = async () => {
+			const response = await api.get('books');
+			setbooks(response.data);
+		};
+
+		fetchBooks();
+	}, []);
+	return (
+		<>
+			<Typography varaint='h1' component='h1' data-test='heading'>
+				Devbook
+			</Typography>
+			<Booklist books={books} />
+		</>
+	);
 }
 
 export default App;
