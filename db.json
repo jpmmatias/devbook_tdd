@@ -1,6 +1,3 @@
 {
-	"books": [
-		{ "key": "1", "name": "Refactoring" },
-		{ "key": "2", "name": "Domain-driven Design" }
-	]
+  "books": []
 }

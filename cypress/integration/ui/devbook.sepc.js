@@ -1,4 +1,24 @@
+import { api } from '../../../src/services/api';
+
 describe('Devbook application', () => {
+	before(() => {
+		return api.delete('books?_cleanup=true').catch((err) => err);
+	});
+	beforeEach(() => {
+		const books = [
+			{ name: 'Refactoring', key: '1' },
+			{ name: 'Domain-driven Design', key: '2' },
+		];
+
+		return books.map((item) =>
+			api.post('books', item, {
+				headers: { 'Content-Type': 'application/json' },
+			})
+		);
+	});
+	afterEach(() => {
+		return api.delete('books?_cleanup=true').catch((err) => err);
+	});
 	it('Visits the devbook', () => {
 		cy.visit('http://localhost:3000/');
 		cy.get('h1[data-test="heading"]').contains('Devbook');
